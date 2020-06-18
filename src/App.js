@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import Todos from "./components/Todos";
-import Header from "./components/layout/Header"
+import Header from "./components/layout/Header";
+import AddTodo from "./components/AddTodo";
+
 import "./App.css";
+// import uuid from "uuid";
 
 class App extends Component {
   state = {
@@ -35,18 +38,41 @@ class App extends Component {
       }),
     });
   };
-delTodo = (id) => {
-  this.setState({ todos: [...this.state.todos.filter(todo => todo.id !== id)] });
-}
+  delTodo = (id) => {
+    this.setState({
+      todos: [...this.state.todos.filter((todo) => todo.id !== id)],
+    });
+  };
+  addTodo = (title) => {
+    const newTodo = {
+      id: 4,
+      title,
+      completed: false,
+    };
+    this.setState({ todos: [...this.state.todos, newTodo] });
+  };
 
   render() {
     return (
       <div className="App">
-        <Header />
-        <Todos todos={this.state.todos} markComplete={this.markComplete} delTodo={this.delTodo}/>
+        <div className="container">
+          <Header />
+          <div style={addTodoCon}>
+            <AddTodo addTodo={this.addTodo} />
+          </div>
+          <Todos
+            todos={this.state.todos}
+            markComplete={this.markComplete}
+            delTodo={this.delTodo}
+          />
+        </div>
       </div>
     );
   }
 }
 
+const addTodoCon = {
+  padding: "10px",
+  background: "#939393",
+};
 export default App;
